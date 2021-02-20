@@ -5,7 +5,7 @@
 
 .PHONY: migrations db
 	migrations:
+		    cd ./SolarCoffee.Data && add-migration ${mname} && cd ..
 
-		cd ./SolarCoffee.Data && add-migration ${mname} && cd ..
-
-db:             cd ./SolarCoffee.Data && update-database && cd .. 
+db:     
+            cd ./SolarCoffee.Data && update-database && cd .. 
