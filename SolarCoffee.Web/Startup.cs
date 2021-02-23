@@ -43,7 +43,7 @@ namespace SolarCoffee.Web
 
             services.AddTransient<IProductService, ProductService>();
             services.AddTransient<ICustomerService, CustomerService>();
-            services.AddTransient<IInventoryService, IInventoryService>();
+            services.AddTransient<IInventoryService, InventoryService>();
             services.AddTransient<IOrderService, OrderService>();
 
 
