@@ -49,6 +49,9 @@ import SolarButton from '@/components/SolarButton.vue';
 import NewProductModal from '@/components/Models/NewProductModal.vue';
 import ShipmentModel from '@/components/Models/ShipmentModel.vue';
 import { IShipment } from '@/types/Shipment';
+import { InventoryService } from "@/services/inventory-service";
+
+const inventoryService = new InventoryService();
 @Component({
   name: 'Inventory',
   components:{SolarButton, NewProductModal, ShipmentModel}
@@ -57,40 +60,7 @@ import { IShipment } from '@/types/Shipment';
 export default class Inventory extends Vue {
     isNewProductVisible:boolean=false;
     isShipmentVisible:boolean=false;
-    inventory : IProductInventory[]=[
-        {
-            id:1,
-            product:{
-                id: 1,
-                createdOn:new Date(),
-                updateOn:new Date(),
-                name:"Some Product",
-                description:"Good stuff",
-                price:100,
-                isTaxable: false,
-                isArchived: false
-            },
-                quantityOnHand:100,
-                idealQuantity: 100
-        },
-         {
-            id:2,
-            product:{
-                id: 2,
-                createdOn:new Date(),
-                updateOn:new Date(),
-                name:"Another Product",
-                description:"Good stuff",
-                price:100,
-                isTaxable: true,
-                isArchived: false
-            },
-                quantityOnHand:200,
-                idealQuantity: 200
-        }
-        
-         
-    ];
+    inventory : IProductInventory[]=[];
     closeModals(){
         this.isShipmentVisible = false;
         this.isNewProductVisible = false;
@@ -105,10 +75,15 @@ saveNewProduct(newProduct: IProduct){
     console.log("saveNewProduct:");
     console.log(newProduct);
 }
-saveNewShipment(shipment:IShipment){
+saveNewShipment(shipment:IShipment){ 
     console.log("saveNewShipment:");
     console.log(shipment)
-
+}
+async fetchData(){
+  this.inventory = await inventoryService.getInventory()
+}
+async created(){
+    await this.fetchData();
 }
 }
 </script>

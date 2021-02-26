@@ -34,6 +34,7 @@ namespace SolarCoffee.Web
         {
 
             services.AddControllers();
+            services.AddCors();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "SolarCoffee.Web", Version = "v1" });
@@ -62,6 +63,14 @@ namespace SolarCoffee.Web
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors(builder =>
+           builder
+           .WithOrigins("http://localhost:8080", "http://localhost:8081", "http://localhost:8082")
+           .AllowAnyMethod()
+           .AllowAnyHeader()
+           .AllowCredentials()
+           );
 
             app.UseAuthorization();
 
